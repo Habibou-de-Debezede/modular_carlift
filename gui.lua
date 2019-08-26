@@ -2,14 +2,10 @@ GUI = {}
 Menu = {}
 Menus = {}
 
-
-
 function round(num, numDecimalPlaces)
     local mult = 10^(numDecimalPlaces or 0)
     return math.floor(num * mult + 0.5) / mult
 end
-
-
 
 GUI.maxVisOptions = 7
 GUI.optionText = {255, 255, 255, 255, 0}
@@ -35,21 +31,15 @@ selectPressed = false
 currentOption = 1
 local optionCount = 0
 
-
-
 function tablelength(T)
   local count = 0
   for _ in pairs(T) do count = count + 1 end
   return count
 end
 
-
-
 function Menu.IsOpen() 
 	return menuOpen == true
 end
-
-
 
 function Menu.SetupMenu(menu, title)
 	Menus[menu] = {}
@@ -59,16 +49,12 @@ function Menu.SetupMenu(menu, title)
 	Menus[menu].previous = nil
 end
 
-
-
 function Menu.addOption(menu, option)
 	if not (Menus[menu].title == nil) then
 		Menus[menu].optionCount = Menus[menu].optionCount + 1
 		Menus[menu].options[Menus[menu].optionCount] = option
 	end
 end
-
-
 
 function Menu.Switch(prevmenu, menu)
   curMenu = menu
@@ -88,8 +74,6 @@ function Menu.Switch(prevmenu, menu)
   end
 end
 
-
-
 function Menu.DisplayCurMenu()
 	if not (curMenu == "") then
 		menuOpen = true
@@ -100,8 +84,6 @@ function Menu.DisplayCurMenu()
 		Menu.updateSelection()
 	end
 end
-
-
 
 function GUI.Text(text, color, position, size, center)
 	local correction = ((1.0 - round(GetSafeZoneSize(), 2)) * 100) * 0.005
@@ -115,15 +97,11 @@ function GUI.Text(text, color, position, size, center)
 	DrawText(correction + position[1], correction + position[2])
 end
 
-
-
 function GUI.Rect(color, position, size)
     local correction = ((1.0 - round(GetSafeZoneSize(), 2)) * 100) * 0.005
 	
 	DrawRect(correction + position[1], correction + position[2], size[1], size[2], color[1], color[2], color[3], color[4])
 end
-
-
 
 function GUI.Spriter(Streamedtexture, textureName, x, y, width, height, rotation, r, g, b, a)
     local correction = ((1.0 - round(GetSafeZoneSize(), 2)) * 100) * 0.005
@@ -135,16 +113,14 @@ function GUI.Spriter(Streamedtexture, textureName, x, y, width, height, rotation
 	end
 end
 
-
-
 function Menu.Title()
-	GUI.Text("GARAGE", GUI.subText, {menuX - menuXOption, (optionCount) * 0.035 + 0.097 }, optionTextSize, false)
+	local menu_title = Language[Config.Locale]['menu_title']
+
+	GUI.Text(menu_title, GUI.subText, {menuX - menuXOption, (optionCount) * 0.035 + 0.097 }, optionTextSize, false)
 	GUI.Rect(GUI.subRect, { menuX, (optionCount) * 0.035 + 0.110 }, optionRectSize)
 	
 	GUI.Spriter("shopui_title_supermod", "shopui_title_supermod", menuX, 0.045, 0.225, 0.095, 0.0, 255, 255, 255, 255)
 end
-
-
 
 function Menu.Option(option)
 	optionCount = optionCount + 1
@@ -183,8 +159,6 @@ function Menu.Option(option)
 	
 	return false
 end
-
-
 
 function Menu.updateSelection()
 	selectPressed = false
